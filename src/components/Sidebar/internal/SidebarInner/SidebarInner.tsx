@@ -121,8 +121,6 @@ export const SidebarInner: React.FC<Props> = ({ inputRef, listRef }) => {
         )}
 
         <Spacer variant="margin" x={3} />
-
-        <PoweredBy />
       </Inner>
 
       <ToggleWrapper>
