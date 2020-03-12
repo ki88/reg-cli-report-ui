@@ -165,7 +165,7 @@ export type Props = {
 };
 
 export const ComparisonView: React.FC<Props> = ({ entity, matching }) => {
-  const [mode, setMode] = useState('slide');
+  const [mode, setMode] = useState('2up');
   const [blendValue, setBlendValue] = useState(0.5);
   const [toggleValue, setToggleValue] = useState(false);
 

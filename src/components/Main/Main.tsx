@@ -7,6 +7,7 @@ import { EntityContainer } from '../../containers/entity/EntityContainer';
 import { ViewerContainer } from '../../containers/viewer/ViewerContainer';
 import { NotificationContainer } from '../../containers/notification/NotificationContainer';
 import { VGrid } from '../VGrid';
+import { EntityStateContainer } from '../../containers/entityState/EntityStateContainer';
 
 const titles: { [K in RegVariant]: string } = {
   new: 'NEW ITEMS',
@@ -57,6 +58,8 @@ const Content: React.FC<{ variant: RegVariant; entities: RegEntity[] }> = ({ var
     notification.notify('Copied URL to clipboard');
   }, [notification]);
 
+  const entityState = EntityStateContainer.useContainer();
+
   if (entities.length < 1) {
     return null;
   }
@@ -70,7 +73,16 @@ const Content: React.FC<{ variant: RegVariant; entities: RegEntity[] }> = ({ var
         cellHeight={Size.CARD_OUTER_HEIGHT}
         gridOptions={gridOptions}
         dimmerCell={() => <CardDimmer variant={variant} />}>
-        {({ item: entity }) => <Card entity={entity} menus={[]} onClick={handleClick} onCopy={handleCopy} />}
+        {({ item: entity }) => (
+          <Card
+            entity={entity}
+            approved={entityState.getItem(entity.name).approved}
+            onApprovedToggle={(approved) => entityState.updateItem(entity.name, { approved })}
+            menus={[]}
+            onClick={handleClick}
+            onCopy={handleCopy}
+          />
+        )}
       </VGrid>
     </>
   );

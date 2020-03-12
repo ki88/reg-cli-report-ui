@@ -10,7 +10,6 @@ import { SidebarContainer } from '../../../../containers/sidebar/SidebarContaine
 import { SignNewIcon } from '../../../icons/SignNewIcon';
 import { SignDeletedIcon } from '../../../icons/SignDeletedIcon';
 import { SignPassedIcon } from '../../../icons/SignPassedIcon';
-import { PoweredBy } from '../../../PoweredBy';
 import { Toggle } from '../Toggle';
 import { useMousetrap } from '../../../../hooks/useMousetrap';
 import { tryPreviousFocus, tryNextFocus } from '../../../../utils/focus';

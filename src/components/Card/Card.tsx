@@ -11,6 +11,7 @@ import { Sign } from '../Sign';
 import { Menu } from '../Menu';
 import { Transparent } from '../internal/Transparent';
 import { BaseButton } from '../internal/BaseButton';
+import { SignPassedIcon } from '../icons/SignPassedIcon';
 
 const Wrapper = styled.div`
   position: relative;
@@ -79,6 +80,18 @@ const CardMenu = styled.div`
   z-index: 10;
 `;
 
+const ApprovedSign = styled.div<{ approved: boolean }>`
+  float: right;
+  display: flex;
+  width: 30px;
+  height: 30px;
+  background-color: ${(props) => (props.approved ? Color.SIGN_PASSED : Color.TEXT_SUB)};
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const imageSrc = (entity: RegEntity) => {
   switch (entity.variant) {
     case 'changed':
@@ -96,9 +109,11 @@ export type Props = {
   menus: { label: string; href: string }[];
   onClick: (id: string) => void;
   onCopy: () => void;
+  approved: boolean;
+  onApprovedToggle: (approved: boolean) => void;
 };
 
-export const Card: React.FC<Props> = ({ entity, menus, onClick, onCopy }) => {
+export const Card: React.FC<Props> = ({ entity, approved, menus, onClick, onCopy, onApprovedToggle }) => {
   const anchor = React.useRef<any>(null);
   const [open, setOpen] = React.useState(false);
 
@@ -148,7 +163,19 @@ export const Card: React.FC<Props> = ({ entity, menus, onClick, onCopy }) => {
         </CardImage>
 
         <CardText title={entity.name}>
-          <Ellipsis>{entity.name}</Ellipsis>
+          <Ellipsis>
+            {entity.variant === 'changed' && (
+              <ApprovedSign
+                approved={approved}
+                onClick={(e) => {
+                  onApprovedToggle(!approved);
+                  e.stopPropagation();
+                }}>
+                <SignPassedIcon width={18} height={18} fill="#fff" />
+              </ApprovedSign>
+            )}
+            {entity.name}
+          </Ellipsis>
         </CardText>
       </Inner>
 
